@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Choice from './containers/choice/choice';
+import Data from './containers/data/data';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+class App extends React.Component {
+
+  state = {
+    showLoader: true,
+    recievedData: []
+  }
+
+  getDataFromBackEnd = (data) => {
+    this.setState({showLoader: false, recievedData: data})
+  }
+
+  render(){
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route 
+              exact path="/" 
+              render={(props)=><Choice 
+                  {...props} 
+                  getDataFromBackEnd = {this.getDataFromBackEnd} 
+                />
+              } 
+            />
+            <Route 
+              exact path="/data" 
+              render={(props)=><Data 
+                    {...props} 
+                    recievedData={this.state.recievedData} 
+                    showLoader = {this.state.showLoader} 
+                  />
+                } 
+            />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
+
 }
 
 export default App;

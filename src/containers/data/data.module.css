@@ -1,0 +1,18 @@
+.Data table {
+    border-collapse: collapse;
+}
+
+.Data td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.Data th {
+    cursor: pointer;
+}
+
+.Data th img {
+    width: 16px;
+    vertical-align: top;
+    margin-left: 10px;
+}
