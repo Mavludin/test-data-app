@@ -12,18 +12,10 @@ class Choice extends React.Component {
         recievedData : [],
     }
 
-    storeDataToLocalStorage = (data) => {
-        if (localStorage) {
-            localStorage.setItem('recievedBackendData', data);
-        }
-    }
-
-    getLittleData = (e) => {
-        e.preventDefault();
+    getLittleData = () => {
         axios.get(littleDataSource)
         .then(response => {
-            this.storeDataToLocalStorafe(response.data);
-            this.props.showLoader();
+            this.props.getDataFromBackEnd(response.data);
         })
         .catch(error => {
             console.log(error);
@@ -33,8 +25,7 @@ class Choice extends React.Component {
     getLargeData = () => { 
         axios.get(largeDataSource)
         .then(response => {
-            this.storeDataToLocalStorafe(response.data);
-            this.props.showLoader();
+            this.props.getDataFromBackEnd(response.data);
         })
         .catch(error => {
             console.log(error);
@@ -46,8 +37,8 @@ class Choice extends React.Component {
             <div className={classes.Choice}>
                 <h1>Сделай выбор</h1>
                 <div className={classes.ChoiceButtons}>
-                    <Link exact="true" to="/data" onClick={(e)=>this.getLittleData(e)} className={classes.LittleData}>Мало данных</Link>
-                    <Link exact="true" to="/data" onClick={this.getLargeData} className={classes.LotsOfData}>Много данных</Link>
+                    <Link exact="true" to="/data/1" onClick={this.getLittleData} className={classes.LittleData}>Мало данных</Link>
+                    <Link exact="true" to="/data/1" onClick={this.getLargeData} className={classes.LotsOfData}>Много данных</Link>
                 </div>
             </div>
         )

@@ -16,3 +16,25 @@
     vertical-align: top;
     margin-left: 10px;
 }
+
+.PopUp {
+    width: max-content;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: (-50%, -50%);
+    z-index: 100;
+}
+
+.OverLay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 90;
+    background-color: rgba(1,1,1,0.5);
+}

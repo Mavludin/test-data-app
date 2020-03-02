@@ -13,11 +13,13 @@ import isObjEmpty from '../../utils/CheckObject';
 class Data extends React.Component {
 
     currentColHeading = React.createRef();
+    popUp = React.createRef();
+    overlay = React.createRef();
 
     state = {
         typesOfSort: [],
         currentPage: 1,
-        dataPerPage: 20,
+        dataPerPage: 10,
         currentRowInfo: {},
         filteredData : []
     }
@@ -47,21 +49,19 @@ class Data extends React.Component {
 
     sortTable = (pos, item) => {
         const tempArray = this.state.typesOfSort;
-        const recievedData = localStorage[('recievedBackendData')];
 
         if (!tempArray[pos]) {
-            recievedData.sort(this.dynamicSort(item, 'asc'));
+            this.props.recievedData.sort(this.dynamicSort(item, 'asc'));
             tempArray[pos] = true;
         } else {
-            recievedData.sort(this.dynamicSort(item, 'desc'));
+            this.props.recievedData.sort(this.dynamicSort(item, 'desc'));
             tempArray[pos] = false;
         }
 
         this.setState({typesOfSort: tempArray})
     }
 
-    paginate = (e, pageNumber) => {
-        e.preventDefault();
+    paginate = (pageNumber) => {
         this.setState({currentPage: pageNumber})
     }
 
@@ -70,27 +70,40 @@ class Data extends React.Component {
     }
 
     filterData = (string) => {
-        const recievedData = localStorage[('recievedBackendData')];
         if (string.length) {
-            const filteredArray = recievedData.filter(item => {
+            const filteredArray = this.props.recievedData.filter(item => {
                 for (let key in item) {
                     if (item[key].toString().toLowerCase().includes(string.toLowerCase()))
                         return item;
                     else continue;
                 }
             });
-            this.setState({filteredData: filteredArray});
+            // this.setState({filteredData: filteredArray});
+            console.log(filteredArray)
         }
     }
 
+    addNewData = () => {
+        return true;
+    }
+
+    showPopUp = () => {
+        // this.overlay.current.style.display = 'block';
+        // this.popup.current.style.display = 'block';
+
+        console.log(this.popup.current)
+    }
+
+    componentDidMount() {
+        
+    }
+
     render() {
-
         const columnTitles = [];
-        const recievedData = localStorage[('recievedBackendData')];
 
-        for (let key in recievedData[0]) {
+        for (let key in this.props.recievedData[0]) {
 
-            if (recievedData[0].hasOwnProperty(key)) {
+            if (this.props.recievedData[0].hasOwnProperty(key)) {
                 columnTitles.push(key);
             }
         }
@@ -111,7 +124,7 @@ class Data extends React.Component {
         if (this.state.filteredData.length) {
             currentData = this.state.filteredData.slice(indexOfFirstPost, indexOfLastPost);
         } else {
-            currentData = recievedData.slice(indexOfFirstPost, indexOfLastPost);
+            currentData = this.props.recievedData.slice(indexOfFirstPost, indexOfLastPost);
         }
 
         const renderingData = currentData.map((item,pos) =>{
@@ -134,6 +147,7 @@ class Data extends React.Component {
                     <h1>Data</h1>
 
                     <Filter filterData={this.filterData} />
+                    <button onClick={this.showPopUp}>Add new Data</button>
                     <table>
                         <thead>
                             <tr>
@@ -145,12 +159,11 @@ class Data extends React.Component {
                         </tbody>
                     </table>
                     {
-                        recievedData.length > this.state.dataPerPage ?
+                        this.props.recievedData.length > this.state.dataPerPage ?
                             <Pagination 
                                 dataPerPage={this.state.dataPerPage} 
                                 totalData={
-                                    this.state.filteredData.length ? this.state.filteredData.length
-                                    : recievedData.length
+                                    this.props.recievedData.length
                                 } 
                                 paginate={this.paginate}
                             />
@@ -160,6 +173,21 @@ class Data extends React.Component {
                         isObjEmpty(this.state.currentRowInfo) ? null
                         : <CurrentRowInfo currentRowInfo={this.state.currentRowInfo} />
                     }
+                </div>
+                <div ref={this.overlay} className={classes.OverLay}></div>
+                <div ref={this.popUp} className={classes.PopUp}>
+                    <form action="/">
+                        <input type="number" name="id" />
+                        <input type="text" name="firstName" />
+                        <input type="text" name="lastName"/>
+                        <input type="email" name="email" />
+                        <input type="tel" name="phone" />
+                        <input type="text" name="streetAddress" />
+                        <input type="text" name="city" />
+                        <input type="text" name="state" />
+                        <input type="text" name="description" />
+                        <button onClick={this.addNewData} onClick={(e)=>e.preventDefault()} type="submit">Добавить</button>
+                    </form>
                 </div>
             </Preloader>
         )

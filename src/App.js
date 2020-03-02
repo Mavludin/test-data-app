@@ -13,8 +13,8 @@ class App extends React.Component {
     recievedData: []
   }
 
-  showLoader = () => {
-    this.setState({showLoader: false})
+  getDataFromBackEnd = (data) => {
+    this.setState({showLoader: false, recievedData: data})
   }
 
   render(){
@@ -26,12 +26,13 @@ class App extends React.Component {
               exact path="/" 
               render={(props)=><ChoicePage 
                   {...props} 
-                  getDataFromBackEnd = {this.getDataFromBackEnd} 
+                  showLoader={this.showLoader}
+                  getDataFromBackEnd={this.getDataFromBackEnd}
                 />
               } 
             />
             <Route 
-              exact path="/data" 
+              exact path='/data/:pageId'
               render={(props)=><DataPage 
                     {...props} 
                     recievedData={this.state.recievedData} 

@@ -11,3 +11,7 @@ ul {
 li + li {
     margin-left: 10px;
 }
+
+.ActivePage {
+    font-size: 30px;
+}
