@@ -8,8 +8,13 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-button {
+button, input, textarea {
   font-family: 'Roboto', sans-serif;
+  outline: unset;
+}
+
+input:focus::placeholder, textarea:focus::placeholder {
+  color: transparent
 }
 
 .App {

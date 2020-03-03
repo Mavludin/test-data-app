@@ -1,0 +1,42 @@
+.PopUp {
+    display: none;
+    width: 400px;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.PopUp form {
+    width: 100%;
+}
+
+.PopUp form input, .PopUp form textarea {
+    display: block;
+    width: 100%;
+    outline: unset;
+    margin-top: 10px;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
+.PopUp button {
+    margin-top: 20px;
+    outline: unset;
+    border: unset;
+    padding: 5px 20px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s linear;
+}
+
+.PopUp button:hover {
+    background-color: black;
+    color: white;
+}

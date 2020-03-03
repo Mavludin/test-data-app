@@ -17,6 +17,12 @@ class App extends React.Component {
     this.setState({showLoader: false, recievedData: data})
   }
 
+  addNewData = (obj) => {
+    const tempArray = this.state.recievedData;
+    tempArray.unshift(obj);
+    this.setState({recievedData: tempArray})
+  }
+
   render(){
     return (
       <BrowserRouter>
@@ -32,7 +38,7 @@ class App extends React.Component {
               } 
             />
             <Route 
-              exact path='/data/:pageId'
+              exact path='/data'
               render={(props)=><DataPage 
                     {...props} 
                     recievedData={this.state.recievedData} 

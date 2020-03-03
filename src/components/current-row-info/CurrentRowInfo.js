@@ -9,7 +9,7 @@ const CurrentRowInfo = ({ currentRowInfo }) => {
         <div>
             Выбран пользователь <b>{`${obj.firstName} ${obj.lastName}`}</b>
             Описание:
-            <textarea defaultValue={obj.description} />
+            <textarea value={obj.description} readOnly/>
             Адрес проживания: <b>{obj.address.streetAddress}</b>
             Город: <b>{obj.address.city}</b>
             Провинция/штат: <b>{obj.address.state}</b>

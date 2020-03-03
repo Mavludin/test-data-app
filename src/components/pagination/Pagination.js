@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Pagination.module.css';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Pagination = ({ dataPerPage, totalData, paginate }) => {
     const pageNumbers = [];
@@ -14,9 +14,13 @@ const Pagination = ({ dataPerPage, totalData, paginate }) => {
                 {pageNumbers.map(number => {
                     return(
                         <li key={number} className={classes.PageItem}>
-                            <NavLink activeClassName={classes.ActivePage} onClick={()=>paginate(number)} exact={true} to={`/data/${number}`} className={classes.PageLink}>
+                            <Link 
+                                onClick={()=>paginate(number)} 
+                                to={`/data?page=${number}`} 
+                                className={classes.PageLink}
+                            >
                                 {number}
-                            </NavLink>
+                            </Link>
                         </li>
                     )
                 })}

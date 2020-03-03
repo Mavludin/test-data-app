@@ -3,6 +3,7 @@ import classes from './DataPage.module.css';
 import Preloader from '../../components/preloader/Preloader';
 import Pagination from '../../components/pagination/Pagination';
 import Filter from '../../components/filter/Filter';
+import PopUp from '../../components/popup/PopUp';
 
 // import sortDownIcon from '../../img/sort-down.svg';
 // import sortUpIcon from '../../img/sort-up.svg';
@@ -19,9 +20,10 @@ class Data extends React.Component {
     state = {
         typesOfSort: [],
         currentPage: 1,
-        dataPerPage: 10,
         currentRowInfo: {},
-        filteredData : []
+        filteredData : [],
+        dataPerPage: 15,
+        isSorted: false
     }
 
     dynamicSort = (key, order = 'asc') => {
@@ -58,7 +60,7 @@ class Data extends React.Component {
             tempArray[pos] = false;
         }
 
-        this.setState({typesOfSort: tempArray})
+        this.setState({typesOfSort: tempArray});
     }
 
     paginate = (pageNumber) => {
@@ -78,40 +80,35 @@ class Data extends React.Component {
                     else continue;
                 }
             });
-            // this.setState({filteredData: filteredArray});
-            console.log(filteredArray)
+            this.setState({filteredData: filteredArray});
         }
     }
 
-    addNewData = () => {
-        return true;
-    }
-
     showPopUp = () => {
-        // this.overlay.current.style.display = 'block';
-        // this.popup.current.style.display = 'block';
-
-        console.log(this.popup.current)
+        this.overlay.current.style.display = 'block';
+        this.popUp.current.style.display = 'block';
     }
 
-    componentDidMount() {
-        
+    closePopUp = () => {
+        this.overlay.current.style.display = 'none';
+        this.popUp.current.style.display = 'none';
     }
 
     render() {
         const columnTitles = [];
 
+        console.log(this.props.recievedData)
+
         for (let key in this.props.recievedData[0]) {
 
             if (this.props.recievedData[0].hasOwnProperty(key)) {
-                columnTitles.push(key);
+                columnTitles.push(key.charAt(0).toUpperCase()+key.substr(1));
             }
         }
 
         const renderColumnTitles = columnTitles.map((item,pos) => {
-            this.state.typesOfSort.push(false);
             return (
-                <th ref={this.currentColHeading} onClick={()=>this.sortTable(pos,item)} key={pos+1}>
+                <th onClick={()=>{this.props.recievedData.sort(this.dynamicSort(item, 'asc'));this.setState({isSorted: true})}} key={pos+1}>
                     <span>{item}</span>
                     {/* <img src={sortUpIcon} alt="Sort Icon" /> */}
                 </th>
@@ -129,7 +126,7 @@ class Data extends React.Component {
 
         const renderingData = currentData.map((item,pos) =>{
             return (
-                <tr onClick={()=> this.passRowInfo(item)} key={pos+1}>
+                <tr onClick={()=>this.passRowInfo(item)} key={pos+1}>
                     <td>{item.id}</td>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
@@ -174,21 +171,8 @@ class Data extends React.Component {
                         : <CurrentRowInfo currentRowInfo={this.state.currentRowInfo} />
                     }
                 </div>
-                <div ref={this.overlay} className={classes.OverLay}></div>
-                <div ref={this.popUp} className={classes.PopUp}>
-                    <form action="/">
-                        <input type="number" name="id" />
-                        <input type="text" name="firstName" />
-                        <input type="text" name="lastName"/>
-                        <input type="email" name="email" />
-                        <input type="tel" name="phone" />
-                        <input type="text" name="streetAddress" />
-                        <input type="text" name="city" />
-                        <input type="text" name="state" />
-                        <input type="text" name="description" />
-                        <button onClick={this.addNewData} onClick={(e)=>e.preventDefault()} type="submit">Добавить</button>
-                    </form>
-                </div>
+                <div onClick={this.closePopUp} ref={this.overlay} className={classes.OverLay}></div>
+                <PopUp closePopUp={this.closePopUp} addNewData={this.props.addNewData} popUp={this.popUp} />
             </Preloader>
         )
     }
