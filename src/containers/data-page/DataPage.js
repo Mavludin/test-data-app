@@ -51,7 +51,7 @@ class Data extends React.Component {
 
     sortTable = (pos, item) => {
         const tempArray = this.state.typesOfSort;
-
+        item = item.charAt(0).toLowerCase()+item.substr(1);
         if (!tempArray[pos]) {
             this.props.recievedData.sort(this.dynamicSort(item, 'asc'));
             tempArray[pos] = true;
@@ -60,7 +60,7 @@ class Data extends React.Component {
             tempArray[pos] = false;
         }
 
-        this.setState({typesOfSort: tempArray});
+        this.setState({typesOfSort: tempArray})
     }
 
     paginate = (pageNumber) => {
@@ -97,8 +97,6 @@ class Data extends React.Component {
     render() {
         const columnTitles = [];
 
-        console.log(this.props.recievedData)
-
         for (let key in this.props.recievedData[0]) {
 
             if (this.props.recievedData[0].hasOwnProperty(key)) {
@@ -107,8 +105,9 @@ class Data extends React.Component {
         }
 
         const renderColumnTitles = columnTitles.map((item,pos) => {
+            this.state.typesOfSort.push(false);
             return (
-                <th onClick={()=>{this.props.recievedData.sort(this.dynamicSort(item, 'asc'));this.setState({isSorted: true})}} key={pos+1}>
+                <th ref={this.currentColHeading} onClick={()=>this.sortTable(pos,item)} key={pos+1}>
                     <span>{item}</span>
                     {/* <img src={sortUpIcon} alt="Sort Icon" /> */}
                 </th>
