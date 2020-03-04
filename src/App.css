@@ -8,6 +8,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 button, input, textarea {
   font-family: 'Roboto', sans-serif;
   outline: unset;

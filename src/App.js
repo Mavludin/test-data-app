@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import ChoicePage from './containers/choice-page/ChoicePage';
-import DataPage from './containers/data-page/DataPage';
+import ChoicePage from './containers/ChoicePage/ChoicePage';
+import DataPage from './containers/DataPage/DataPage';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -23,6 +23,10 @@ class App extends React.Component {
     this.setState({recievedData: tempArray})
   }
 
+  changeMainData = (array) => {
+    this.setState({recievedData: array})
+  }
+
   render(){
     return (
       <BrowserRouter>
@@ -30,7 +34,8 @@ class App extends React.Component {
           <Switch>
             <Route 
               exact path="/" 
-              render={(props)=><ChoicePage 
+              render={(props)=>
+                <ChoicePage 
                   {...props} 
                   showLoader={this.showLoader}
                   getDataFromBackEnd={this.getDataFromBackEnd}
@@ -39,11 +44,13 @@ class App extends React.Component {
             />
             <Route 
               exact path='/data'
-              render={(props)=><DataPage 
+              render={(props)=>
+                  <DataPage 
                     {...props} 
                     recievedData={this.state.recievedData} 
                     showLoader = {this.state.showLoader}
-                    getFiltered = {this.getFiltered} 
+                    getFiltered = {this.getFiltered}
+                    changeMainData = {this.changeMainData} 
                   />
                 } 
             />

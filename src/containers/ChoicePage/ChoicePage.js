@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { littleDataSource, largeDataSource } from '../../utils/Endpoints';
 
-class Choice extends React.Component {
+class ChoicePage extends React.Component {
 
     getLittleData = () => {
         axios.get(littleDataSource)
@@ -43,4 +43,4 @@ class Choice extends React.Component {
     }
 }
 
-export default Choice;
+export default ChoicePage;

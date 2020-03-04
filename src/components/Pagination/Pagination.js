@@ -8,6 +8,11 @@ const Pagination = ({ dataPerPage, totalData, paginate }) => {
     for (let i=1; i<=Math.ceil(totalData / dataPerPage); i++) {
         pageNumbers.push(i);
     }
+
+    const toggleActiveClass = (e) => {
+        e.target.classList.toggle(classes.ActiveLink);
+    }
+
     return (
         <nav>
             <ul className={classes.Pagination}>
@@ -15,7 +20,7 @@ const Pagination = ({ dataPerPage, totalData, paginate }) => {
                     return(
                         <li key={number} className={classes.PageItem}>
                             <Link 
-                                onClick={()=>paginate(number)} 
+                                onClick={(e)=>{paginate(number);toggleActiveClass(e);}}
                                 to={`/data?page=${number}`} 
                                 className={classes.PageLink}
                             >

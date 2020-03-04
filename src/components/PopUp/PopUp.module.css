@@ -1,6 +1,7 @@
 .PopUp {
     display: none;
     width: 400px;
+    height: 440px;
     padding: 10px;
     position: fixed;
     top: 50%;
@@ -18,7 +19,6 @@
 .PopUp form input, .PopUp form textarea {
     display: block;
     width: 100%;
-    outline: unset;
     margin-top: 10px;
     padding-left: 5px;
     font-size: 16px;
@@ -26,8 +26,6 @@
 
 .PopUp button {
     margin-top: 20px;
-    outline: unset;
-    border: unset;
     padding: 5px 20px;
     background-color: white;
     border: 1px solid black;

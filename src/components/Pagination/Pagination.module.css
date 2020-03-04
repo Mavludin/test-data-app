@@ -16,7 +16,12 @@ li + li {
     margin-left: 10px;
 }
 
-.Pagination a {
+.PageLink {
     transition: all .2s linear;
     text-decoration: none;
+    font-size: 20px;
+}
+
+.ActiveLink {
+    font-size: 30px;
 }
