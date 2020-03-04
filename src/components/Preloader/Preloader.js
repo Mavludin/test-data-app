@@ -1,11 +1,13 @@
 import React from 'react';
 import classes from './Preloader.module.css';
 
+import preloaderIcon from "../../img/preloader.gif";
+
 const Preloader = (props) => {
     return (
         props.visible ?
             <div className={classes.Preloader}>
-                <h1>Fetching data...</h1>
+                <img src={preloaderIcon} alt="Preloader icon"/>
             </div>
         :
         props.children

@@ -2,8 +2,8 @@
     border-collapse: collapse;
     max-width: 992px;
     width: 100%;
-    margin: 0 auto;
     font-size: 14px;
+    margin: 20px auto;
 }
 
 .DataPage td, th {

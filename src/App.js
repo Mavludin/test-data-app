@@ -51,6 +51,7 @@ class App extends React.Component {
                     showLoader = {this.state.showLoader}
                     getFiltered = {this.getFiltered}
                     changeMainData = {this.changeMainData} 
+                    addNewData={this.addNewData}
                   />
                 } 
             />

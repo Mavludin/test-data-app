@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './PopUp.module.css';
 
+import closeIcon from '../../img/close-icon.svg';
+
 class PopUp extends React.Component {
 
     state = {
@@ -67,9 +69,12 @@ class PopUp extends React.Component {
             description: this.state.desc
         }
 
+
+        const isObjectValid = Object.values(obj).every(x => x);
+
         return (
             <div ref={this.props.popUp} className={classes.PopUp}>
-                <form action="/">
+                <form onSubmit={(e)=>{e.preventDefault()}} action="/">
                     <input value={this.state.id} ref={this.id} onChange={this.onDataListen} type="number" name="id" placeholder="Id" required/>
                     <input value={this.state.firstName} ref={this.firstName} onChange={this.onDataListen} type="text" name="firstName" placeholder="Имя" required/>
                     <input value={this.state.lastName} ref={this.lastName} onChange={this.onDataListen} type="text" name="lastName" placeholder="Фамилия" required/>
@@ -80,8 +85,12 @@ class PopUp extends React.Component {
                     <input value={this.state.state} ref={this.state} onChange={this.onDataListen} type="text" name="state" placeholder="Провинция/Штат" required/>
                     <input value={this.state.zip} ref={this.zip} onChange={this.onDataListen} type="number" name="zip" placeholder="Почтовый индекс" required/>
                     <textarea value={this.state.idescd} ref={this.desc} onChange={this.onDataListen} type="text" name="description" placeholder="Описание" required/>
-                    <button onClick={(e)=>{e.preventDefault();this.props.addNewData(obj);this.props.closePopUp()}} type="submit">Добавить</button>
+                    <button className="blackBtn" onClick={(e)=>{
+                                    this.props.addNewData(obj);
+                                    this.props.closePopUp();
+                        }} type="submit">Добавить</button>
                 </form>
+                <img onClick={this.props.closePopUp} src={closeIcon} alt="Close Icon"/>
             </div>
         )
     }

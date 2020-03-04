@@ -4,10 +4,10 @@ import Preloader from '../../components/Preloader/Preloader';
 import Pagination from '../../components/Pagination/Pagination';
 import Filter from '../../components/Filter/Filter';
 import PopUp from '../../components/PopUp/PopUp';
+import SelectedInfo from '../../components/SelectedInfo/SelectedInfo';
 
 import sortDownIcon from '../../img/sort-down.svg';
 import sortUpIcon from '../../img/sort-up.svg';
-import SelectedInfo from '../../components/SelectedInfo/SelectedInfo';
 
 import isObjEmpty from '../../utils/CheckObject';
 import dynamicSort from '../../utils/DynamicSort';
@@ -24,9 +24,9 @@ class DataPage extends React.Component {
         typesOfSort: [],
         currentPage: 1,
         selectedInfo: {},
-        filteredData : [],
+        filteringData : [],
         dataPerPage: 50,
-        isFiltered: false
+        isFiltered: false,
     }
 
     sortTable = (pos, item, e) => {
@@ -69,14 +69,17 @@ class DataPage extends React.Component {
                     }
                 }
             });
-            this.setState({filteredData: filteredArray, isFiltered: true});
+            this.setState({filteringData: filteredArray, isFiltered: true});
         } else this.setState({isFiltered: false});
     }
 
-    getFiltered = () => {
-        const tempArray = this.state.filteredData;
-        this.props.changeMainData(tempArray);
-        this.setState({isFiltered: false})
+    getFiltered = (e) => {
+        if (this.state.isFiltered) {
+            const tempArray = this.state.filteringData;
+            this.props.changeMainData(tempArray);
+            e.currentTarget.previousSibling.value = '';
+            this.setState({isFiltered: false});
+        }
     }
 
     showPopUp = () => {
@@ -98,34 +101,34 @@ class DataPage extends React.Component {
 
     render() {
 
-        const columnTitles = [];
+        const tableHeaderCells = [];
         for (let key in this.props.recievedData[0]) {
 
             if (this.props.recievedData[0].hasOwnProperty(key)) {
-                columnTitles.push(key.charAt(0).toUpperCase() + key.substr(1));
+                tableHeaderCells.push(key.charAt(0).toUpperCase() + key.substr(1));
             }
         }
 
-        const renderingColumnTitles = columnTitles.slice(0,5).map((item,pos) => {
+        const renderingTableHeaderCells = tableHeaderCells.slice(0,5).map((item,pos) => {
             this.state.typesOfSort.push(false);
             return (
                 <th onClick={(e)=>this.sortTable(pos,item,e)} key={pos+1}>
                     <div onClick={()=>false}>
                         <span>{item}</span>
-                        <img className={classes.SortDownIcon} src={sortDownIcon} alt="Sort Icon" />
-                        <img className={classes.SortUpIcon} src={sortUpIcon} alt="Sort Icon" />
+                        <img className={classes.SortDownIcon} src={sortDownIcon} alt="Sort Down Icon" />
+                        <img className={classes.SortUpIcon} src={sortUpIcon} alt="Sort Up Icon" />
                     </div>
                 </th>
             )
         });
 
-        const indexOfLastPost = this.state.currentPage * this.state.dataPerPage;
-        const indexOfFirstPost = indexOfLastPost - this.state.dataPerPage;
+        const indexOfLastItem = this.state.currentPage * this.state.dataPerPage;
+        const indexOfFirstItem = indexOfLastItem - this.state.dataPerPage;
         let currentData = [];
         if (this.state.isFiltered) {
-            currentData = this.state.filteredData.slice(indexOfFirstPost, indexOfLastPost);
+            currentData = this.state.filteringData.slice(indexOfFirstItem, indexOfLastItem);
         } else {
-            currentData = this.props.recievedData.slice(indexOfFirstPost, indexOfLastPost);
+            currentData = this.props.recievedData.slice(indexOfFirstItem, indexOfLastItem);
         }
 
         const renderingData = currentData.map((item,pos) =>{
@@ -152,12 +155,12 @@ class DataPage extends React.Component {
 
                     <Filter getFiltered={this.getFiltered} filterData={this.filterData} />
 
-                    <button onClick={this.showPopUp}>Add new Data</button>
+                    <button className="blackBtn" onClick={this.showPopUp}>Добавить</button>
 
                     <table>
                         <thead>
                             <tr>
-                                {renderingColumnTitles}
+                                {renderingTableHeaderCells}
                             </tr>
                         </thead>
                         <tbody>
@@ -167,13 +170,13 @@ class DataPage extends React.Component {
 
                     {
                         (!this.state.isFiltered && (this.props.recievedData.length > this.state.dataPerPage) ) || 
-                            (this.state.isFiltered && (this.state.filteredData.length > this.state.dataPerPage) )  
+                            (this.state.isFiltered && (this.state.filteringData.length > this.state.dataPerPage) )  
                             ?
                             <Pagination 
                                 dataPerPage={this.state.dataPerPage} 
                                 totalData={
                                     this.state.isFiltered ?
-                                    this.state.filteredData.length
+                                    this.state.filteringData.length
                                     : this.props.recievedData.length
                                 } 
                                 paginate={this.paginate}

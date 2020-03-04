@@ -1,8 +1,8 @@
 .PopUp {
     display: none;
     width: 400px;
-    height: 440px;
-    padding: 10px;
+    height: 460px;
+    padding: 20px 10px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -24,17 +24,10 @@
     font-size: 16px;
 }
 
-.PopUp button {
-    margin-top: 20px;
-    padding: 5px 20px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 8px;
+.PopUp img {
+    width: 16px;
+    position: absolute;
+    top: 6px;
+    right: 10px;
     cursor: pointer;
-    transition: all .2s linear;
-}
-
-.PopUp button:hover {
-    background-color: black;
-    color: white;
 }

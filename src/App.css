@@ -18,7 +18,22 @@ button, input, textarea {
 }
 
 input:focus::placeholder, textarea:focus::placeholder {
-  color: transparent
+  color: transparent;
+}
+
+.blackBtn {
+  margin-top: 20px;
+  padding: 5px 20px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s linear;
+}
+
+.blackBtn:hover {
+  background-color: black;
+  color: white;
 }
 
 .App {
