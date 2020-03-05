@@ -1,4 +1,4 @@
-.Choice {
+.ChoicePage {
     width: 350px;
     border-radius: 10px;
     border: 1px solid black;
@@ -15,7 +15,7 @@
     justify-content: space-around;
 }
 
-.Choice h1 {
+.ChoicePage h1 {
     margin-top: 0;
 }
 
@@ -27,8 +27,7 @@
     justify-content: space-around;
 }
 
-.Choice a {
-    text-decoration: none;
+.ChoicePage a {
     color: #000;
     
     border: 1px solid black;
@@ -43,7 +42,7 @@
     transition: all .2s linear;
 }
 
-.Choice a:hover {
+.ChoicePage a:hover {
     background-color: black;
     color: white;
 }

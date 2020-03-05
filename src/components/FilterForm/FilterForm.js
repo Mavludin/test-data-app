@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Filter.module.css';
+import classes from './FilterForm.module.css';
 
 import searchIcon from '../../img/search-icon.svg';
 

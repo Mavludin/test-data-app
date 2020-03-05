@@ -8,18 +8,8 @@ import { littleDataSource, largeDataSource } from '../../utils/Endpoints';
 
 class ChoicePage extends React.Component {
 
-    getLittleData = () => {
-        axios.get(littleDataSource)
-        .then(response => {
-            this.props.getDataFromBackEnd(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
-    getLargeData = () => { 
-        axios.get(largeDataSource)
+    makeAPICall = (dataSource) => {
+        axios.get(dataSource)
         .then(response => {
             this.props.getDataFromBackEnd(response.data);
         })
@@ -32,15 +22,26 @@ class ChoicePage extends React.Component {
 
         return (
 
-            <div className={classes.Choice}>
-                <h1>Сделай выбор</h1>
+            <div className={classes.ChoicePage}>
+                <h1>Make a choice</h1>
                 <div className={classes.ChoiceButtons}>
-                    <Link exact="true" to='/data' onClick={this.getLittleData} className={classes.LittleData}>Мало данных</Link>
-                    <Link exact="true" to='/data' onClick={this.getLargeData} className={classes.LotsOfData}>Много данных</Link>
+                    <Link 
+                        exact="true" 
+                        to='/data' 
+                        onClick={()=>this.makeAPICall(littleDataSource)} className={classes.LittleData}>
+                        Little Data
+                    </Link>
+                    <Link 
+                        exact="true" 
+                        to='/data' 
+                        onClick={()=>this.makeAPICall(largeDataSource)} className={classes.LotsOfData}>
+                        Large Data
+                    </Link>
                 </div>
             </div>
         )
     }
+
 }
 
 export default ChoicePage;

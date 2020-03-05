@@ -21,6 +21,10 @@ input:focus::placeholder, textarea:focus::placeholder {
   color: transparent;
 }
 
+a {
+  text-decoration: none;
+}
+
 .blackBtn {
   margin-top: 20px;
   padding: 5px 20px;

@@ -3,6 +3,8 @@ import classes from './PopUp.module.css';
 
 import closeIcon from '../../img/close-icon.svg';
 
+import isObjEmpty from '../../utils/CheckObject';
+
 class PopUp extends React.Component {
 
     state = {
@@ -69,25 +71,28 @@ class PopUp extends React.Component {
             description: this.state.desc
         }
 
-
-        const isObjectValid = Object.values(obj).every(x => x);
-
         return (
             <div ref={this.props.popUp} className={classes.PopUp}>
                 <form onSubmit={(e)=>{e.preventDefault()}} action="/">
-                    <input value={this.state.id} ref={this.id} onChange={this.onDataListen} type="number" name="id" placeholder="Id" required/>
-                    <input value={this.state.firstName} ref={this.firstName} onChange={this.onDataListen} type="text" name="firstName" placeholder="Имя" required/>
-                    <input value={this.state.lastName} ref={this.lastName} onChange={this.onDataListen} type="text" name="lastName" placeholder="Фамилия" required/>
-                    <input value={this.state.email} ref={this.email} onChange={this.onDataListen} type="email" name="email" placeholder="Эл. почта" required/>
-                    <input value={this.state.phone} ref={this.phone} onChange={this.onDataListen} type="tel" name="phone" placeholder="Телефон" required/>
-                    <input value={this.state.streetAddress} ref={this.streetAddress} onChange={this.onDataListen} type="text" name="streetAddress" placeholder="Улица" required/>
-                    <input value={this.state.city} ref={this.city} onChange={this.onDataListen} type="text" name="city" placeholder="Город" required/>
-                    <input value={this.state.state} ref={this.state} onChange={this.onDataListen} type="text" name="state" placeholder="Провинция/Штат" required/>
-                    <input value={this.state.zip} ref={this.zip} onChange={this.onDataListen} type="number" name="zip" placeholder="Почтовый индекс" required/>
-                    <textarea value={this.state.idescd} ref={this.desc} onChange={this.onDataListen} type="text" name="description" placeholder="Описание" required/>
+                    <input value={this.state.id} ref={this.id} onChange={this.onDataListen} type="number" name="id" placeholder="Id"/>
+                    <input value={this.state.firstName} ref={this.firstName} onChange={this.onDataListen} type="text" name="firstName" placeholder="Имя"/>
+                    <input value={this.state.lastName} ref={this.lastName} onChange={this.onDataListen} type="text" name="lastName" placeholder="Фамилия"/>
+                    <input value={this.state.email} ref={this.email} onChange={this.onDataListen} type="email" name="email" placeholder="Эл. почта"/>
+                    <input value={this.state.phone} ref={this.phone} onChange={this.onDataListen} type="tel" name="phone" placeholder="Телефон"/>
+                    <input value={this.state.streetAddress} ref={this.streetAddress} onChange={this.onDataListen} type="text" name="streetAddress" placeholder="Улица"/>
+                    <input value={this.state.city} ref={this.city} onChange={this.onDataListen} type="text" name="city" placeholder="Город"/>
+                    <input value={this.state.state} ref={this.state} onChange={this.onDataListen} type="text" name="state" placeholder="Провинция/Штат"/>
+                    <input value={this.state.zip} ref={this.zip} onChange={this.onDataListen} type="number" name="zip" placeholder="Почтовый индекс"/>
+                    <textarea value={this.state.idescd} ref={this.desc} onChange={this.onDataListen} type="text" name="description" placeholder="Описание"/>
                     <button className="blackBtn" onClick={(e)=>{
-                                    this.props.addNewData(obj);
-                                    this.props.closePopUp();
+                        if (!isObjEmpty(obj)) {
+                            this.props.addNewData(obj);
+                            this.props.closePopUp();
+                        } else {
+                            e.preventDefault();
+                            alert('Заполните все поля');
+                        }
+
                         }} type="submit">Добавить</button>
                 </form>
                 <img onClick={this.props.closePopUp} src={closeIcon} alt="Close Icon"/>

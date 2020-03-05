@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './DataPage.module.css';
 import Preloader from '../../components/Preloader/Preloader';
 import Pagination from '../../components/Pagination/Pagination';
-import Filter from '../../components/Filter/Filter';
+import FilterForm from '../../components/FilterForm/FilterForm';
 import PopUp from '../../components/PopUp/PopUp';
 import SelectedInfo from '../../components/SelectedInfo/SelectedInfo';
 
@@ -96,7 +96,6 @@ class DataPage extends React.Component {
         setTimeout(()=> {
             Scroll.animateScroll.scrollTo(parseInt(this.selectedInfoBlock.current.offsetTop))
         }, 200);
-
     }
 
     render() {
@@ -153,7 +152,7 @@ class DataPage extends React.Component {
                         : <h1>Данные</h1>
                     }
 
-                    <Filter getFiltered={this.getFiltered} filterData={this.filterData} />
+                    <FilterForm getFiltered={this.getFiltered} filterData={this.filterData} />
 
                     <button className="blackBtn" onClick={this.showPopUp}>Добавить</button>
 
